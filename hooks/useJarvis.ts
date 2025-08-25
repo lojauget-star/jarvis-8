@@ -49,13 +49,13 @@ export const useJarvis = () => {
   }, [isListening, isSpeaking, isBrowserSupported]);
 
 
-  const getJarvisResponseStream = useCallback(async (message: string, history: Message[]): Promise<AsyncGenerator<GenerateContentResponse>> => {
+  const getJarvisResponseStream = useCallback(async (message: string, history: Message[], token: string): Promise<AsyncGenerator<GenerateContentResponse>> => {
     const response = await fetch('/.netlify/functions/gemini', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message, history }),
+      body: JSON.stringify({ message, history, token }),
     });
 
     if (!response.ok || !response.body) {
